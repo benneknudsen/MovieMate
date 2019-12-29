@@ -1,3 +1,8 @@
+.container {
+  padding: 20px;
+  margin: 0 auto;
+}
+
 #search {
   color: #fff;
   background-color: #007bff;
@@ -27,4 +32,31 @@
 
 .form-group {
   margin-bottom: 1rem;
+}
+
+.logo {
+  width: 200px;
+}
+
+#movies-searchable {
+  margin-top: 20px;
+}
+
+section {
+  display: flex;
+  width: 100%;
+  overflow-x: auto;
+  overflow-y: hidden;
+  overflow-x: scroll;
+}
+
+section img {
+  width: 300px;
+  transition: 250ms all;
+}
+
+section img:hover {
+  margin-left: 0 40px;
+  transform: scale(1.2);
+  cursor: pointer;
 }
