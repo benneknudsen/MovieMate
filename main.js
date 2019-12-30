@@ -123,3 +123,10 @@ content.appendChild(iframeContainer);
 		content.classList.remove('content-display');
 	}
 }
+
+jQuery(window).load(function() {
+	// will first fade out the loading animation
+jQuery("#status").delay(1200).fadeOut();
+	// will fade out the whole DIV that covers the website.
+jQuery("#preloader").delay(1200).fadeOut("slow");
+})
