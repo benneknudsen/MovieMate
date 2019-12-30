@@ -9,6 +9,11 @@ const buttonElement = document.querySelector('#search');
 const inputElement = document.querySelector('#inputValue');
 const movieSearchable = document.querySelector('#movies-searchable');
 
+function generateUrl(path) {
+	const url = `https://api.themoviedb.org/3${path}?api_key=5b912386d63e0f1b35005d2704d11c94`;
+	return url;
+
+}
 
 function movieSection(movies) {
 	return movies.map((movie) => {
@@ -51,7 +56,8 @@ function renderSearchMovies(data) {
 buttonElement.onclick = function(event) {
 	event.preventDefault();
 	const value = inputElement.value;
-	const newUrl = url + '&query=' + value;
+	const path = '/search/movie';
+	const newUrl = generateUrl(path) + '&query=' + value;
 
 	fetch(newUrl)
 	  .then((res) => res.json())
@@ -62,4 +68,58 @@ buttonElement.onclick = function(event) {
 
 	inputElement.value = '';	
 	console.log('Value: ', value);
+}
+
+function createIframe(video) {
+	const iframe = document.createElement('iframe');
+	iframe.src = `https://youtube.com/embed/${video.key}`;
+	iframe.width = 360;
+	iframe.height = 315;
+	iframe.allowFullscreen = true;
+
+	return iframe;
+}
+
+
+// Event til at tilføje og fjerne Content boksen under film posters
+
+document.onclick = function() {
+	const target = event.target;
+
+	if(target.tagName.toLowerCase() === 'img') {
+		const movieId = target.dataset.movieId;
+		const section = event.target.parentElement;
+		const content = section.nextElementSibling;
+		content.classList.add('content-display');
+
+		const path = `/movie/${movieId}/videos`;
+		const url = generateUrl(path);
+
+		// Fetch film trailers
+
+		fetch(url)
+		.then((res) => res.json())
+		.then((data) => {
+
+		   console.log('Videos: ', data);
+		   const videos = data.results;
+		   const length = videos.length > 2 ? 2 : videos.length;
+		   const iframeContainer = document.createElement('div');
+		   
+		   for (let i = 0; i < length; i++) {
+const video = videos[i];
+const iframe = createIframe(video);
+iframeContainer.appendChild(iframe);
+content.appendChild(iframeContainer);
+		   }
+		})
+		.catch((error) => {
+			console.log('Error: ', error);
+		});
+	}
+	
+	if (target.id === 'content-close') {
+		const content = target.parentElement;
+		content.classList.remove('content-display');
+	}
 }

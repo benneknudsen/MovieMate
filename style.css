@@ -1,3 +1,27 @@
+body {
+  background-color: #14212C;
+}
+
+::-webkit-scrollbar-track
+{
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+	border-radius: 10px;
+	background-color: #1C2D3C;
+}
+
+::-webkit-scrollbar
+{
+	width: 12px;
+	background-color: #14212C;
+}
+
+::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+	background-color: #555;
+}
+
 .container {
   padding: 20px;
   margin: 0 auto;
@@ -40,6 +64,7 @@
 
 #movies-searchable {
   margin-top: 20px;
+  
 }
 
 section {
@@ -48,15 +73,34 @@ section {
   overflow-x: auto;
   overflow-y: hidden;
   overflow-x: scroll;
+  
 }
 
 section img {
   width: 300px;
-  transition: 250ms all;
+  transition: 400ms all;
 }
 
 section img:hover {
   margin-left: 0 40px;
   transform: scale(1.2);
   cursor: pointer;
+}
+
+.content {
+  border: 1px solid red;
+  display: none;
+}
+
+.content div {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  align-items: center;
+  margin: 10px;
+  
+}
+
+.content-display {
+  display: block;
 }
