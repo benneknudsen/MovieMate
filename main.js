@@ -4,33 +4,46 @@
 const buttonElement = document.querySelector('#search');
 const inputElement = document.querySelector('#inputValue');
 const movieSearchable = document.querySelector('#movies-searchable');
-
+const movieContainer = document.querySelector('#movies-container');
 
 function movieSection(movies) {
-	return movies.map((movie) => {
+	const section = document.createElement('section');
+	section.classList = 'section';
+	
+	movies.map((movie) => {
 		if(movie.poster_path){
-			return `<img 
-			src=${IMAGE_URL + movie.poster_path} 
-			data-movie-id=${movie.id}
-			/>`;
+			const img = document.createElement('img');
+			img.src = IMAGE_URL + movie.poster_path;
+			img.setAttribute('data-movie-id', movie.id);
+			
+			section.appendChild(img);
 		}
-	})}
+	})
+
+	return section;
+}
 
 
-function createMovieContainer(movies) {
+
+function createMovieContainer(movies, title = '') {
 	const movieElement = document.createElement('div');
 	movieElement.setAttribute('class', 'movie');
 
-	const movieTemplate = `
-	<section class="section">
-${movieSection(movies)}
-	</section>
-	<div class="content">
-<p id="content-close">X</p>
-	</div>
-	`;
+const header = document.createElement('h2');
+header.innerHTML = title;
 
-	movieElement.innerHTML = movieTemplate;
+	const content = document.createElement('div');
+	content.classList = 'content';
+
+const contentClose = `<p id="content-close">X</p>`
+
+content.innerHTML = contentClose;
+
+	
+const section = movieSection(movies);
+	movieElement.appendChild(header);
+	movieElement.appendChild(section);
+	movieElement.appendChild(content);
 	return movieElement;
 }
 
@@ -41,9 +54,16 @@ function renderSearchMovies(data) {
 	const movies = data.results;
 	const movieBlock = createMovieContainer(movies);
 	movieSearchable.appendChild(movieBlock);
-	console.log('Data:  ', data);
+	
 }
 
+function renderMovies(data) {
+
+	const movies = data.results;
+	const movieBlock = createMovieContainer(movies, this.title);
+	movieContainer.appendChild(movieBlock);
+	
+}
 
 
 function handleError(error){
@@ -120,9 +140,11 @@ document.onclick = function() {
 	}
 }
 
+
+
 getUpcomingMovies();
-
-
+getTopRatedMovies();
+getPopularMovies();
 
 jQuery(window).load(function() {
 	// will first fade out the loading animation
